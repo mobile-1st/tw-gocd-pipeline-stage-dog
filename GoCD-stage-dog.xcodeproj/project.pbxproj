@@ -12,6 +12,8 @@
 		824AF4AD1EB82A3D003038C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824AF4AC1EB82A3D003038C3 /* Assets.xcassets */; };
 		824AF4B01EB82A3D003038C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 824AF4AE1EB82A3D003038C3 /* Main.storyboard */; };
 		824AF4BA1EB832BA003038C3 /* mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 824AF4B91EB832BA003038C3 /* mp3 */; };
+		824AF4C01EB88DA5003038C3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 824AF4BE1EB88DA5003038C3 /* LICENSE */; };
+		824AF4C11EB88DA5003038C3 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 824AF4BF1EB88DA5003038C3 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		824AF4B11EB82A3D003038C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		824AF4B91EB832BA003038C3 /* mp3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mp3; sourceTree = "<group>"; };
 		824AF4BD1EB87A6F003038C3 /* GoCD-stage-dog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "GoCD-stage-dog.entitlements"; sourceTree = "<group>"; };
+		824AF4BE1EB88DA5003038C3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		824AF4BF1EB88DA5003038C3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +43,8 @@
 		824AF49C1EB82A3C003038C3 = {
 			isa = PBXGroup;
 			children = (
+				824AF4BE1EB88DA5003038C3 /* LICENSE */,
+				824AF4BF1EB88DA5003038C3 /* README.md */,
 				824AF4A71EB82A3D003038C3 /* GoCD-stage-dog */,
 				824AF4A61EB82A3D003038C3 /* Products */,
 			);
@@ -133,6 +139,7 @@
 			files = (
 				824AF4BA1EB832BA003038C3 /* mp3 in Resources */,
 				824AF4AD1EB82A3D003038C3 /* Assets.xcassets in Resources */,
+				824AF4C01EB88DA5003038C3 /* LICENSE in Resources */,
 				824AF4B01EB82A3D003038C3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				824AF4C11EB88DA5003038C3 /* README.md in Sources */,
 				824AF4AB1EB82A3D003038C3 /* ViewController.swift in Sources */,
 				824AF4A91EB82A3D003038C3 /* AppDelegate.swift in Sources */,
 			);
@@ -262,7 +270,7 @@
 				DEVELOPMENT_TEAM = W38285RYNS;
 				INFOPLIST_FILE = "GoCD-stage-dog/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "sunzhongmou.com.GoCD-stage-dog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -278,7 +286,7 @@
 				DEVELOPMENT_TEAM = W38285RYNS;
 				INFOPLIST_FILE = "GoCD-stage-dog/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "sunzhongmou.com.GoCD-stage-dog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -304,6 +312,7 @@
 				824AF4B61EB82A3D003038C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

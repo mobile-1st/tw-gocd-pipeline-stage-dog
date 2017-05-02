@@ -77,7 +77,7 @@ class ViewController: NSViewController {
                 if let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as? [String:Any] {
                     if let latestStage = json["stages"] as? [Any] {
                         let result = latestStage.first! as! [String: Any]
-                        if (result["result"]! as! String) != "Passed"{
+                        if (result["result"]! as! String) == "Failed"{
                             DispatchQueue.main.async {
                                 self.showNotification(message: "Latest Test Failed! Go......")
                                 if self.pipelineDown == false {
@@ -104,7 +104,7 @@ class ViewController: NSViewController {
     }
     
     func playSound() {
-        let url = Bundle.main.url(forResource: "2107.王妃.萧敬腾.HD0761", withExtension: "mp3", subdirectory: "mp3")!
+        let url = Bundle.main.url(forResource: "挂了", withExtension: "m4a", subdirectory: "mp3")!
         
         do {
             player = try AVAudioPlayer(contentsOf: url)
