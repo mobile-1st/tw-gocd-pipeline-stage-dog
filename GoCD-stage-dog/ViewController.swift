@@ -14,10 +14,14 @@ class ViewController: NSViewController {
     var player: AVAudioPlayer?
     var gameTimer: Timer!
     var pipelineDown: Bool!
+    var requestsFailedCounter: Int! = 0
     
     let gGoServerAPIUrl = "https://gocd.thoughtworks.net/go/api/stages/"
-    let gPipelineName: String! = "SalesFunnel"
-    let gWatchStages: [String] = ["Test"]
+    let gPipelineNames: [String] = ["SalesFunnel", "Accounts-Service"]
+    let gWatchStages = [
+        "SalesFunnel": ["Test", "Userjourney"],
+        "Accounts-Service": ["Test"]
+    ]
     let gTemember = [
         "jiangxu": "江江",
         "yren": "教主",
@@ -25,7 +29,9 @@ class ViewController: NSViewController {
         "tywang": "sky one",
         "yycao": "洋洋",
         "wjshu": "皮皮",
-        "zhuang": "州州"
+        "zhuang": "州州",
+        "qsong": "俊毅居士",
+        "wwsun": "wayde"
     ]
 
     @IBOutlet weak var notification: NSTextField!
@@ -84,42 +90,44 @@ class ViewController: NSViewController {
         self.showNotification(message: "Checking...")
         
         if self.checkUserInfo() == false { return }
-        
-        for name in gWatchStages {
-            let stageRequest = self.buildRequest(stageName: name)
-            self.fire(request: stageRequest)
+        self.requestsFailedCounter = 0
+        for pipelineName in gPipelineNames {
+            let stages = gWatchStages[pipelineName]
+            
+            for name in stages! {
+                self.requestsFailedCounter! += 1
+                let stageRequest = self.buildRequest(pipelineName:pipelineName, stageName: name)
+                self.fire(request: stageRequest, pipelineName: pipelineName, stageName: name)
+            }
         }
         
     }
     
-    func getErrorMessage(name: String!) -> String {
+    func getErrorMessage(name: String!, pipelineName: String!, stageName: String!) -> String {
         var errorMessage = ""
         
         if name == "changes" {
-            errorMessage = "哪位少年又把派佩烂弄挂了，赛世方罗喊你修派佩烂啦"
+            errorMessage = "哪位少年又把派佩烂\(pipelineName as String)\(stageName as String)弄挂了，赛世方罗喊你修派佩烂啦"
         } else {
             let chineseName = gTemember[name]
-            errorMessage = chineseName! + "，你又把派佩烂弄挂了，赛世方罗又喊你修派佩烂啦"
+            errorMessage = chineseName! + "，你又把派佩烂\(pipelineName as String)\(stageName as String)弄挂了，赛世方罗又喊你修派佩烂啦"
         }
         
         return errorMessage
     }
     
-    func fire(request: URLRequest!) {
+    func fire(request: URLRequest!, pipelineName: String!, stageName: String!) {
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             let jsonString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             let data = jsonString?.data(using: String.Encoding.utf8.rawValue)!
             do {
                 if let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as? [String:Any] {
                     
-                    
                     if let latestStage = json["stages"] as? [Any] {
                         let result = latestStage.first! as! [String: Any]
                         if (result["result"]! as! String) == "Failed"{
                             let approvalName = result["approved_by"] as! String
-                            let errorMessage = self.getErrorMessage(name: approvalName)
-                            
-                            
+                            let errorMessage = self.getErrorMessage(name: approvalName, pipelineName: pipelineName, stageName: stageName)
                             
                             DispatchQueue.main.async {
                                 self.showNotification(message: "Failed! " + self.getCurrentTime())
@@ -131,7 +139,10 @@ class ViewController: NSViewController {
                             }
                         } else {
                             DispatchQueue.main.async {
-                                self.pipelineDown = false
+                                self.requestsFailedCounter! -= 1
+                                if self.requestsFailedCounter! == 0 {
+                                    self.pipelineDown = false
+                                }
                                 self.showNotification(message: "Passed! " + self.getCurrentTime())
                             }
                         }
@@ -146,8 +157,8 @@ class ViewController: NSViewController {
         task.resume()
     }
     
-    func buildRequest(stageName: String!) -> URLRequest {
-        let url = URL(string: "https://gocd.thoughtworks.net/go/api/stages/\(gPipelineName as String)/\(stageName as String)/history")
+    func buildRequest(pipelineName: String!, stageName: String!) -> URLRequest {
+        let url = URL(string: "\(gGoServerAPIUrl as String)\(pipelineName as String)/\(stageName as String)/history")
         
         var request = URLRequest(url: url!)
         let username = self.username.stringValue
